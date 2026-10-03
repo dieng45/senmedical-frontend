@@ -1,0 +1,79 @@
+<!-- statistiques-admin.html -->
+<!-- Vue analytique detaillee de la plateforme -->
+<div class="page-statistiques-admin">
+
+  <div class="entete-admin">
+    <h1>Statistiques</h1>
+    <p>Analyse détaillée de l'activité de la plateforme SenMédical.</p>
+  </div>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement...</p>
+  }
+
+  @if (!chargement && statistiques) {
+
+    <!-- Repartition gravite en chiffres -->
+    <div class="bloc-section">
+      <h2><mat-icon>warning</mat-icon> Répartition des évaluations de gravité</h2>
+      <div class="grille-gravite">
+        <div class="carte-gravite carte-faible">
+          <span class="valeur-gravite">{{ statistiques.repartitionFaible }}</span>
+          <span class="libelle-gravite">Faible ({{ pourcentage(statistiques.repartitionFaible, statistiques.totalEvaluationsGravite) }}%)</span>
+        </div>
+        <div class="carte-gravite carte-modere">
+          <span class="valeur-gravite">{{ statistiques.repartitionModere }}</span>
+          <span class="libelle-gravite">Modéré ({{ pourcentage(statistiques.repartitionModere, statistiques.totalEvaluationsGravite) }}%)</span>
+        </div>
+        <div class="carte-gravite carte-urgent">
+          <span class="valeur-gravite">{{ statistiques.repartitionUrgent }}</span>
+          <span class="libelle-gravite">Urgent ({{ pourcentage(statistiques.repartitionUrgent, statistiques.totalEvaluationsGravite) }}%)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grille-deux-colonnes">
+
+      <!-- Documents par categorie -->
+      <div class="bloc-section">
+        <h2><mat-icon>library_books</mat-icon> Documents par catégorie</h2>
+
+        @if (documentsParCategorie.length === 0) {
+          <p class="message-etat">Aucun document dans la base de connaissances.</p>
+        }
+
+        @for (item of documentsParCategorie; track item.categorie) {
+          <div class="ligne-barre">
+            <span class="libelle-barre">{{ item.categorie }}</span>
+            <div class="fond-barre">
+              <div class="remplissage-barre remplissage-bleu" [style.width.%]="pourcentageBarre(item.nombre, maxDocumentsCategorie)"></div>
+            </div>
+            <span class="valeur-barre">{{ item.nombre }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Specialites les plus recommandees -->
+      <div class="bloc-section">
+        <h2><mat-icon>medical_services</mat-icon> Spécialités les plus recommandées</h2>
+
+        @if (specialites.length === 0) {
+          <p class="message-etat">Aucune orientation générée pour le moment.</p>
+        }
+
+        @for (item of specialites; track item.specialite) {
+          <div class="ligne-barre">
+            <span class="libelle-barre">{{ item.specialite }}</span>
+            <div class="fond-barre">
+              <div class="remplissage-barre remplissage-violet" [style.width.%]="pourcentageBarre(item.nombre, maxSpecialite)"></div>
+            </div>
+            <span class="valeur-barre">{{ item.nombre }}</span>
+          </div>
+        }
+      </div>
+
+    </div>
+
+  }
+
+</div>

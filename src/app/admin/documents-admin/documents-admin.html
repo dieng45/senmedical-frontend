@@ -1,0 +1,126 @@
+<!-- documents-admin.html -->
+<!-- Gestion de la base de connaissances : liste + formulaire d'ajout par upload PDF -->
+<div class="page-documents-admin">
+
+  <div class="entete-admin">
+    <div>
+      <h1>Gestion de la base de connaissances</h1>
+      <p>Importez des documents PDF pour enrichir les réponses de MediBot IA.</p>
+    </div>
+    <button class="bouton-ajouter" (click)="ouvrirFormulaire()">
+      <mat-icon>add</mat-icon> Ajouter un document
+    </button>
+  </div>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement...</p>
+  }
+
+  @if (!chargement) {
+    <div class="tableau-documents">
+      <div class="ligne-entete">
+        <span>Titre</span>
+        <span>Catégorie</span>
+        <span>Date d'ajout</span>
+        <span class="colonne-actions-entete">Actions</span>
+      </div>
+
+      @for (document of documents; track document.id) {
+        <div class="ligne-document">
+          <span class="cellule-titre">{{ document.titre }}</span>
+          <span class="cellule-categorie">{{ document.categorie || '-' }}</span>
+          <span class="cellule-date">{{ formaterDate(document.dateAjout) }}</span>
+          <span class="cellule-actions">
+            <button class="bouton-icone bouton-supprimer" (click)="supprimerDocument(document.id)" title="Supprimer">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </span>
+        </div>
+      }
+
+      @if (documents.length === 0) {
+        <div class="etat-vide-admin">
+          <mat-icon>library_books</mat-icon>
+          <p>Aucun document pour l'instant. Ajoutez-en un pour enrichir MediBot IA.</p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (afficherFormulaire) {
+    <div class="fond-modal" (click)="fermerFormulaire()">
+      <div class="modal-ajout" (click)="$event.stopPropagation()">
+        <div class="entete-modal">
+          <div>
+            <h2>Ajouter un document médical</h2>
+            <p class="sous-titre-modal">Importez un document PDF pour enrichir la base de connaissances de MediBot IA.</p>
+          </div>
+          <button class="bouton-fermer-modal" (click)="fermerFormulaire()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <form (ngSubmit)="ajouterDocument()">
+          <div class="champ-modal">
+            <label>Titre *</label>
+            <input type="text" [(ngModel)]="nouveauTitre" name="titre" placeholder="Ex : Paludisme chez l'adulte" required>
+          </div>
+
+          <div class="ligne-champs-modal">
+            <div class="champ-modal">
+              <label>Source</label>
+              <input type="text" [(ngModel)]="nouvelleSource" name="source" placeholder="Ex : Ministère de la Santé">
+            </div>
+            <div class="champ-modal">
+              <label>Catégorie</label>
+              <input type="text" [(ngModel)]="nouvelleCategorie" name="categorie" placeholder="Ex : Maladies infectieuses">
+            </div>
+          </div>
+
+          <div class="champ-modal">
+            <label>Document PDF *</label>
+
+            @if (!fichierSelectionne) {
+              <label class="zone-depot" [class.zone-depot-active]="glisserActif"
+                     (dragover)="surSurvolGlisser($event)"
+                     (dragleave)="surSortieGlisser($event)"
+                     (drop)="surDeposeFichier($event)">
+                <input type="file" accept="application/pdf" (change)="surSelectionFichier($event)" hidden>
+                <mat-icon>cloud_upload</mat-icon>
+                <span class="texte-depot-principal">Cliquez pour choisir un fichier PDF</span>
+                <span class="texte-depot-secondaire">ou glissez-déposez ici</span>
+                <span class="texte-depot-format">Format accepté : PDF (max 10 Mo)</span>
+              </label>
+            }
+
+            @if (fichierSelectionne) {
+              <div class="fichier-choisi">
+                <mat-icon class="icone-pdf">picture_as_pdf</mat-icon>
+                <div class="info-fichier">
+                  <span class="nom-fichier">{{ fichierSelectionne.name }}</span>
+                  <span class="taille-fichier">{{ formaterTaille(fichierSelectionne.size) }}</span>
+                </div>
+                <button type="button" class="bouton-retirer-fichier" (click)="retirerFichier()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+
+          @if (messageErreur) {
+            <p class="message-erreur-modal">{{ messageErreur }}</p>
+          }
+
+          <div class="actions-modal">
+            <button type="button" class="bouton-annuler-modal" (click)="fermerFormulaire()">Annuler</button>
+            <button type="submit" class="bouton-enregistrer-modal" [disabled]="enregistrement">
+              <mat-icon>upload_file</mat-icon>
+              @if (enregistrement) { Ajout en cours... } @else { Ajouter le document }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+</div>

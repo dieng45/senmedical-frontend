@@ -1,0 +1,35 @@
+<!-- consultation-detail.html -->
+<!-- Detail d'une consultation : reconstitue la conversation avec MediBot IA -->
+<div class="page-detail-consultation">
+
+  <a routerLink="/consultations" class="lien-retour">
+    <mat-icon>arrow_back</mat-icon> Retour à mes consultations
+  </a>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement...</p>
+  }
+
+  @if (erreur) {
+    <div class="message-erreur-globale">
+      <mat-icon>error_outline</mat-icon>
+      Impossible de charger cette consultation.
+    </div>
+  }
+
+  @if (consultation) {
+    <h1>Consultation du {{ formaterHeure(consultation.dateDebut) }}</h1>
+
+    <div class="zone-messages-detail">
+      @for (message of consultation.messages; track $index) {
+        <div class="ligne-message-detail" [class.ligne-patient]="message.expediteur === 'PATIENT'">
+          <div class="bulle-detail" [class.bulle-patient]="message.expediteur === 'PATIENT'">
+            <p>{{ message.contenu }}</p>
+          </div>
+          <span class="horodatage-detail">{{ formaterHeure(message.dateEnvoi) }}</span>
+        </div>
+      }
+    </div>
+  }
+
+</div>

@@ -1,0 +1,138 @@
+<!-- utilisateurs-admin.html -->
+<!-- Liste des patients inscrits, avec recherche, edition, activation/desactivation, suppression -->
+<div class="page-utilisateurs-admin">
+
+  <div class="entete-admin">
+    <div>
+      <h1>Utilisateurs</h1>
+      <p>Gérez les comptes des patients inscrits sur SenMédical.</p>
+    </div>
+    <div class="zone-recherche">
+      <mat-icon>search</mat-icon>
+      <input
+        type="text"
+        placeholder="Rechercher par nom ou email..."
+        [(ngModel)]="recherche"
+        (ngModelChange)="onRechercheChange()"
+      />
+    </div>
+  </div>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement...</p>
+  }
+
+  @if (!chargement) {
+    <div class="tableau-utilisateurs">
+      <div class="ligne-entete">
+        <span>Utilisateur</span>
+        <span>Email</span>
+        <span>Téléphone</span>
+        <span>Inscrit le</span>
+        <span>Statut</span>
+        <span class="colonne-actions-entete">Actions</span>
+      </div>
+
+      @for (utilisateur of utilisateurs; track utilisateur.id) {
+        <div class="ligne-utilisateur">
+          <span class="cellule-nom">
+            <span class="avatar-utilisateur">{{ initiales(utilisateur.nom, utilisateur.prenom) }}</span>
+            {{ utilisateur.prenom }} {{ utilisateur.nom }}
+          </span>
+          <span class="cellule-email">{{ utilisateur.email }}</span>
+          <span class="cellule-telephone">{{ utilisateur.telephone || '-' }}</span>
+          <span class="cellule-date">{{ formaterDate(utilisateur.dateCreation) }}</span>
+          <span class="cellule-statut">
+            <span class="badge-statut" [class.badge-inactif]="!estActif(utilisateur.id)">
+              {{ estActif(utilisateur.id) ? 'Actif' : 'Désactivé' }}
+            </span>
+          </span>
+          <span class="cellule-actions">
+            <button class="bouton-icone" title="Modifier" (click)="ouvrirEdition(utilisateur)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="bouton-icone" [title]="estActif(utilisateur.id) ? 'Désactiver' : 'Activer'" (click)="basculerStatut(utilisateur)">
+              <mat-icon>{{ estActif(utilisateur.id) ? 'block' : 'check_circle' }}</mat-icon>
+            </button>
+            <button class="bouton-icone bouton-supprimer" title="Supprimer" (click)="demanderSuppression(utilisateur.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </div>
+      }
+
+      @if (utilisateurs.length === 0) {
+        <div class="etat-vide-admin">
+          <mat-icon>group</mat-icon>
+          <p>Aucun utilisateur trouvé.</p>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Modal edition -->
+  @if (modalEditionOuvert) {
+    <div class="fond-modal" (click)="fermerEdition()">
+      <div class="modal-edition" (click)="$event.stopPropagation()">
+        <div class="entete-modal">
+          <div>
+            <h2>Modifier l'utilisateur</h2>
+            <p class="sous-titre-modal">Mettez à jour les informations du compte.</p>
+          </div>
+          <button class="bouton-fermer-modal" (click)="fermerEdition()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        @if (erreurModal) {
+          <p class="message-erreur-modal">{{ erreurModal }}</p>
+        }
+
+        <div class="ligne-champs-modal">
+          <div class="champ-modal">
+            <label>Prénom</label>
+            <input type="text" [(ngModel)]="utilisateurEnEdition.prenom" />
+          </div>
+          <div class="champ-modal">
+            <label>Nom</label>
+            <input type="text" [(ngModel)]="utilisateurEnEdition.nom" />
+          </div>
+        </div>
+
+        <div class="champ-modal">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="utilisateurEnEdition.email" />
+        </div>
+
+        <div class="champ-modal">
+          <label>Téléphone</label>
+          <input type="tel" [(ngModel)]="utilisateurEnEdition.telephone" />
+        </div>
+
+        <div class="actions-modal">
+          <button class="bouton-annuler-modal" (click)="fermerEdition()">Annuler</button>
+          <button class="bouton-enregistrer-modal" [disabled]="enregistrementEnCours" (click)="enregistrerEdition()">
+            <mat-icon>save</mat-icon>
+            {{ enregistrementEnCours ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Confirmation suppression -->
+  @if (idASupprimer !== null) {
+    <div class="fond-modal" (click)="annulerSuppression()">
+      <div class="modal-confirmation" (click)="$event.stopPropagation()">
+        <mat-icon class="icone-avertissement">warning</mat-icon>
+        <h2>Supprimer ce compte ?</h2>
+        <p>Cette action est définitive et supprimera toutes les données associées à ce patient.</p>
+        <div class="actions-modal">
+          <button class="bouton-annuler-modal" (click)="annulerSuppression()">Annuler</button>
+          <button class="bouton-confirmer-suppression" (click)="confirmerSuppression()">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

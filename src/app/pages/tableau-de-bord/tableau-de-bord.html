@@ -1,0 +1,138 @@
+<!-- tableau-de-bord.html -->
+<!-- Vue d'ensemble de la plateforme : chiffres cles, graphiques, activite recente -->
+<div class="page-tableau-de-bord">
+
+  <div class="entete-tableau">
+    <div>
+      <h1>Bonjour Admin 👋</h1>
+      <p>Voici un aperçu global de l'activité de la plateforme SenMédical.</p>
+    </div>
+    <div class="date-du-jour">
+      <mat-icon>calendar_today</mat-icon>
+      {{ formaterDateAujourdhui() }}
+    </div>
+  </div>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement...</p>
+  }
+
+  @if (!chargement && statistiques) {
+
+    <!-- Cartes chiffres cles -->
+    <div class="grille-cartes">
+      <div class="carte-stat">
+        <div class="icone-carte icone-bleue"><mat-icon>group</mat-icon></div>
+        <span class="libelle-carte">Total utilisateurs</span>
+        <span class="valeur-carte">{{ statistiques.totalPatients }}</span>
+      </div>
+      <div class="carte-stat">
+        <div class="icone-carte icone-violette"><mat-icon>forum</mat-icon></div>
+        <span class="libelle-carte">Consultations IA</span>
+        <span class="valeur-carte">{{ statistiques.totalConsultations }}</span>
+      </div>
+      <div class="carte-stat">
+        <div class="icone-carte icone-verte"><mat-icon>description</mat-icon></div>
+        <span class="libelle-carte">Documents PDF</span>
+        <span class="valeur-carte">{{ statistiques.totalDocuments }}</span>
+      </div>
+      <div class="carte-stat">
+        <div class="icone-carte icone-rouge"><mat-icon>warning</mat-icon></div>
+        <span class="libelle-carte">Cas évalués</span>
+        <span class="valeur-carte">{{ statistiques.totalEvaluationsGravite }}</span>
+      </div>
+    </div>
+
+    <!-- Graphique + Donut -->
+    <div class="grille-graphiques">
+
+      <div class="bloc-graphique">
+        <h2><mat-icon>show_chart</mat-icon> Évolution des consultations</h2>
+        <p class="sous-titre-bloc">Nombre de consultations MediBot IA durant les 7 derniers jours.</p>
+
+        <svg viewBox="0 0 600 160" class="svg-evolution" preserveAspectRatio="none">
+          <polygon [attr.points]="pointsAireEvolution" class="aire-evolution" />
+          <polyline [attr.points]="pointsGraphiqueEvolution" class="ligne-evolution" />
+        </svg>
+        <div class="libelles-jours">
+          @for (point of statistiques.evolutionConsultations; track point.jour) {
+            <span>{{ point.jour }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="bloc-graphique">
+        <h2><mat-icon>pie_chart</mat-icon> Répartition des urgences</h2>
+
+        <div class="zone-donut">
+          <svg viewBox="0 0 140 140" class="svg-donut">
+            @for (segment of segmentsDonut; track segment.couleur) {
+              <circle
+                cx="70" cy="70" r="60"
+                fill="none"
+                [attr.stroke]="segment.couleur"
+                stroke-width="16"
+                [attr.stroke-dasharray]="segment.dasharray"
+                [attr.stroke-dashoffset]="segment.dashoffset"
+                transform="rotate(-90 70 70)"
+              />
+            }
+          </svg>
+          <div class="centre-donut">
+            <span class="total-donut">{{ statistiques.totalEvaluationsGravite }}</span>
+            <span class="libelle-donut">cas évalués</span>
+          </div>
+        </div>
+
+        <div class="legende-donut">
+          <div class="ligne-legende">
+            <span class="puce-legende" style="background:#16a34a"></span>
+            Faible
+            <span class="valeurs-legende">
+              {{ pourcentage(statistiques.repartitionFaible, statistiques.totalEvaluationsGravite) }}% · {{ statistiques.repartitionFaible }}
+            </span>
+          </div>
+          <div class="ligne-legende">
+            <span class="puce-legende" style="background:#f59e0b"></span>
+            Modéré
+            <span class="valeurs-legende">
+              {{ pourcentage(statistiques.repartitionModere, statistiques.totalEvaluationsGravite) }}% · {{ statistiques.repartitionModere }}
+            </span>
+          </div>
+          <div class="ligne-legende">
+            <span class="puce-legende" style="background:#dc2626"></span>
+            Urgent
+            <span class="valeurs-legende">
+              {{ pourcentage(statistiques.repartitionUrgent, statistiques.totalEvaluationsGravite) }}% · {{ statistiques.repartitionUrgent }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Activite recente -->
+    <div class="bloc-activite">
+      <h2><mat-icon>history</mat-icon> Activité récente</h2>
+
+      @if (statistiques.activiteRecente.length === 0) {
+        <p class="message-etat">Aucune activité pour le moment.</p>
+      }
+
+      @for (activite of statistiques.activiteRecente; track activite.date) {
+        <div class="ligne-activite">
+          <div class="icone-activite" [class.icone-urgence]="activite.type === 'URGENCE'">
+            <mat-icon>{{ iconeActivite(activite.type) }}</mat-icon>
+          </div>
+          <div class="texte-activite">
+            <span class="titre-activite">{{ activite.titre }}</span>
+            <span class="sous-titre-activite">{{ activite.sousTitre }}</span>
+          </div>
+          <span class="temps-activite">{{ tempsEcoule(activite.date) }}</span>
+        </div>
+      }
+    </div>
+
+  }
+
+</div>

@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+/* Empeche le defilement global de la page (utile pour les pages plein ecran comme login) */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}

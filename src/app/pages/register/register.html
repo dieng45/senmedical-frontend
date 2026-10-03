@@ -1,0 +1,116 @@
+<!-- register.html -->
+<!-- Page d'inscription patient : meme identite visuelle que login, formulaire compact -->
+<div class="page-inscription">
+
+  <mat-card class="carte-inscription">
+    <div class="entete-logo">
+      <div class="icone-logo">
+        <img src="/LOGOsenmedical-removebg-preview.png" alt="Logo SenMedical" class="image-logo">
+      </div>
+      <div class="texte-logo">
+        <h1>Sen<span class="accent-vert">Medical</span></h1>
+        <p class="slogan">Créez votre compte patient</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="sInscrire()" #formInscription="ngForm" class="formulaire-inscription">
+
+      <div class="ligne-champs">
+        <mat-form-field appearance="outline" class="champ-moitie">
+          <mat-label>Nom</mat-label>
+          <input matInput name="nom" [(ngModel)]="nom" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="champ-moitie">
+          <mat-label>Prénom</mat-label>
+          <input matInput name="prenom" [(ngModel)]="prenom" required>
+        </mat-form-field>
+      </div>
+
+      <div class="ligne-champs">
+        <mat-form-field appearance="outline" class="champ-moitie">
+          <mat-icon matPrefix>mail</mat-icon>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="champ-moitie">
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-label>Mot de passe</mat-label>
+          <input matInput [type]="motDePasseVisible ? 'text' : 'password'"
+                 name="motDePasse" [(ngModel)]="motDePasse" required minlength="6">
+          <button mat-icon-button matSuffix type="button" (click)="basculerVisibiliteMotDePasse()">
+            <mat-icon>{{ motDePasseVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="ligne-champs">
+        <mat-form-field appearance="outline" class="champ-moitie">
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-label>Téléphone</mat-label>
+          <input matInput name="telephone" [(ngModel)]="telephone">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="champ-tiers">
+          <mat-label>Date de naissance</mat-label>
+          <input matInput [matDatepicker]="datepicker" name="dateNaissance" [(ngModel)]="dateNaissance">
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="champ-tiers">
+          <mat-label>Sexe</mat-label>
+          <mat-select name="sexe" [(ngModel)]="sexe">
+            <mat-option value="M">M</mat-option>
+            <mat-option value="F">F</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="ligne-champs">
+        <mat-form-field appearance="outline" class="champ-tiers">
+          <mat-label>Groupe sanguin</mat-label>
+          <mat-select name="groupeSanguin" [(ngModel)]="groupeSanguin">
+            <mat-option value="A+">A+</mat-option>
+            <mat-option value="A-">A-</mat-option>
+            <mat-option value="B+">B+</mat-option>
+            <mat-option value="B-">B-</mat-option>
+            <mat-option value="AB+">AB+</mat-option>
+            <mat-option value="AB-">AB-</mat-option>
+            <mat-option value="O+">O+</mat-option>
+            <mat-option value="O-">O-</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="champ-deux-tiers">
+          <mat-label>Antécédents</mat-label>
+          <input matInput name="antecedents" [(ngModel)]="antecedents" placeholder="Ex : diabète...">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="champ-pleine-largeur">
+        <mat-label>Allergies</mat-label>
+        <input matInput name="allergies" [(ngModel)]="allergies" placeholder="Ex : pénicilline, arachides...">
+      </mat-form-field>
+
+      @if (messageErreur) {
+        <p class="message-erreur">{{ messageErreur }}</p>
+      }
+
+      <button mat-flat-button color="primary" type="submit"
+              class="bouton-inscription"
+              [disabled]="!formInscription.valid || chargement">
+        @if (chargement) {
+          <mat-spinner diameter="18"></mat-spinner>
+        } @else {
+          <span>S'inscrire</span> <mat-icon>arrow_forward</mat-icon>
+        }
+      </button>
+    </form>
+
+    <p class="lien-connexion">
+      Déjà un compte ? <a routerLink="/login">Se connecter</a>
+    </p>
+  </mat-card>
+</div>

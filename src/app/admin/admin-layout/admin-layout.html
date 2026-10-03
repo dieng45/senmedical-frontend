@@ -1,0 +1,33 @@
+<!-- admin-layout.html -->
+<div class="conteneur-admin">
+
+  <aside class="barre-laterale-admin">
+    <div class="logo-admin">
+      <img src="/LOGOsenmedical-removebg-preview.png" alt="Logo">
+      <span>SenMedical</span>
+    </div>
+
+    <nav class="navigation-admin">
+      <a routerLink="/admin/tableau-de-bord" routerLinkActive="lien-actif-admin" class="lien-admin">
+        <mat-icon>dashboard</mat-icon> Tableau de bord
+      </a>
+      <a routerLink="/admin/utilisateurs" routerLinkActive="lien-actif-admin" class="lien-admin">
+        <mat-icon>group</mat-icon> Utilisateurs
+      </a>
+      <a routerLink="/admin/documents" routerLinkActive="lien-actif-admin" class="lien-admin">
+        <mat-icon>library_books</mat-icon> Base de connaissances
+      </a>
+      <a routerLink="/admin/statistiques" routerLinkActive="lien-actif-admin" class="lien-admin">
+        <mat-icon>bar_chart</mat-icon> Statistiques
+      </a>
+    </nav>
+
+    <button class="bouton-deconnexion-admin" (click)="seDeconnecter()">
+      <mat-icon>logout</mat-icon> Déconnexion
+    </button>
+  </aside>
+
+  <main class="contenu-admin">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,168 @@
+/* register.css */
+/* Fond flou et assombri via un calque separe (::before), carte nette au-dessus */
+
+.page-inscription {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.page-inscription::before {
+  content: '';
+  position: absolute;
+  inset: -10px; /* deborde legerement pour eviter les bords nets visibles a cause du flou */
+  background: url('/imageInscription.jpg') center/cover no-repeat;
+  filter: blur(6px) brightness(0.4);
+  z-index: 0;
+}
+
+.carte-inscription {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  padding: 32px 40px;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(13, 71, 161, 0.2);
+}
+
+.entete-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.icone-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.image-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.texte-logo h1 {
+  font-size: 24px;
+  color: #0d47a1;
+  margin: 0;
+}
+
+.accent-vert {
+  color: #26a69a;
+}
+
+.slogan {
+  font-size: 13px;
+  color: #555;
+  margin: 2px 0 0;
+}
+
+.formulaire-inscription {
+  display: flex;
+  flex-direction: column;
+}
+
+.ligne-champs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.champ-moitie {
+  flex: 1;
+}
+
+.champ-tiers {
+  flex: 1;
+}
+
+.champ-deux-tiers {
+  flex: 2;
+}
+
+.champ-pleine-largeur {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.ligne-champs mat-form-field,
+.champ-pleine-largeur {
+  font-size: 15px;
+}
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+:host ::ng-deep .mdc-text-field {
+  padding-top: 0;
+}
+
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+  height: 60px;
+}
+
+:host ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 60px;
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+
+.bouton-inscription {
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 25px !important;
+  background: linear-gradient(135deg, #1976d2, #1565c0) !important;
+}
+
+.bouton-inscription mat-icon {
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.message-erreur {
+  color: #d32f2f;
+  font-size: 13px;
+  margin: 4px 0 10px;
+}
+
+.lien-connexion {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin: 16px 0 0;
+}
+
+.lien-connexion a {
+  color: #26a69a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .ligne-champs {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .champ-moitie,
+  .champ-tiers,
+  .champ-deux-tiers {
+    margin-bottom: 14px;
+  }
+}

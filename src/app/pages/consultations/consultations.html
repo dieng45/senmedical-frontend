@@ -1,0 +1,138 @@
+<!-- consultations.html -->
+<!-- Liste des consultations filtrable par gravite, avec panneau detail et suppression -->
+<div class="page-consultations">
+
+  <div class="entete-consultations">
+    <div class="icone-titre">
+      <mat-icon>calendar_today</mat-icon>
+    </div>
+    <div>
+      <h1>Mes consultations</h1>
+      <p>Retrouvez ici l'historique de vos conversations avec MediBot IA.</p>
+    </div>
+  </div>
+
+  @if (chargement) {
+    <p class="message-etat">Chargement de votre historique...</p>
+  }
+
+  @if (erreur) {
+    <div class="message-erreur-globale">
+      <mat-icon>error_outline</mat-icon>
+      Impossible de charger votre historique. Réessayez plus tard.
+    </div>
+  }
+
+  @if (!chargement && !erreur) {
+
+    <div class="onglets-filtre">
+      <button class="onglet" [class.onglet-actif]="filtreActif === 'TOUTES'" (click)="changerFiltre('TOUTES')">
+        Toutes <span class="compteur">{{ compterParGravite('TOUTES') }}</span>
+      </button>
+      <button class="onglet onglet-faible" [class.onglet-actif]="filtreActif === 'FAIBLE'" (click)="changerFiltre('FAIBLE')">
+        Faible <span class="compteur">{{ compterParGravite('FAIBLE') }}</span>
+      </button>
+      <button class="onglet onglet-moyen" [class.onglet-actif]="filtreActif === 'MOYEN'" (click)="changerFiltre('MOYEN')">
+        Modéré <span class="compteur">{{ compterParGravite('MOYEN') }}</span>
+      </button>
+      <button class="onglet onglet-eleve" [class.onglet-actif]="filtreActif === 'ELEVE'" (click)="changerFiltre('ELEVE')">
+        Urgent <span class="compteur">{{ compterParGravite('ELEVE') }}</span>
+      </button>
+    </div>
+
+    <div class="corps-consultations">
+
+      <div class="colonne-liste">
+        @if (consultationsFiltrees.length === 0) {
+          <div class="etat-vide">
+            <mat-icon>calendar_today</mat-icon>
+            <p>Aucune consultation dans cette catégorie.</p>
+          </div>
+        }
+
+        @for (consultation of consultationsFiltrees; track consultation.id) {
+          <button class="carte-consultation"
+                  [class.carte-selectionnee]="consultationSelectionnee?.id === consultation.id"
+                  (click)="ouvrirDetail(consultation.id)">
+            <div class="avatar-carte">
+              <mat-icon>smart_toy</mat-icon>
+            </div>
+            <div class="info-carte">
+              <div class="ligne-titre-carte">
+                <span class="titre-carte">{{ consultation.specialiteRecommandee || 'Consultation en cours' }}</span>
+              </div>
+              <span class="date-carte">
+                <mat-icon>schedule</mat-icon> {{ formaterDate(consultation.dateDebut) }}
+              </span>
+            </div>
+            @if (consultation.niveauGravite) {
+              <span class="badge-gravite" [class]="classeGravite(consultation.niveauGravite)">
+                {{ libelleGravite(consultation.niveauGravite) }}
+              </span>
+            }
+            <button class="bouton-supprimer" (click)="supprimerConsultation(consultation.id, $event)" title="Supprimer">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </button>
+        }
+      </div>
+
+      <div class="colonne-detail">
+        @if (!consultationSelectionnee && !chargementDetail) {
+          <div class="detail-vide">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <p>Sélectionnez une consultation pour voir le détail de l'échange.</p>
+          </div>
+        }
+
+        @if (chargementDetail) {
+          <p class="message-etat">Chargement de la conversation...</p>
+        }
+
+        @if (consultationSelectionnee) {
+          <div class="entete-detail">
+            <div>
+              <h2>{{ consultationSelectionnee.resultats[0]?.specialiteRecommandee || 'Consultation' }}</h2>
+              <span class="date-detail">
+                <mat-icon>schedule</mat-icon> {{ formaterDate(consultationSelectionnee.dateDebut) }}
+              </span>
+            </div>
+            @if (consultationSelectionnee.resultats.length > 0) {
+              <span class="badge-gravite" [class]="classeGravite(consultationSelectionnee.resultats[consultationSelectionnee.resultats.length - 1].niveauGravite)">
+                {{ libelleGravite(consultationSelectionnee.resultats[consultationSelectionnee.resultats.length - 1].niveauGravite) }}
+              </span>
+            }
+          </div>
+
+          <div class="zone-messages-detail">
+            @for (message of consultationSelectionnee.messages; track $index) {
+              <div class="ligne-message-detail" [class.ligne-patient]="message.expediteur === 'PATIENT'">
+                @if (message.expediteur === 'CHATBOT') {
+                  <div class="avatar-mini"><mat-icon>smart_toy</mat-icon></div>
+                }
+                <div class="groupe-bulle-detail">
+                  <div class="bulle-detail" [class.bulle-patient]="message.expediteur === 'PATIENT'">
+                    <p>{{ message.contenu }}</p>
+                  </div>
+                  <span class="horodatage-detail">{{ formaterHeure(message.dateEnvoi) }}</span>
+                </div>
+                @if (message.expediteur === 'PATIENT') {
+                  <div class="avatar-mini avatar-mini-patient"><mat-icon>person</mat-icon></div>
+                }
+              </div>
+            }
+          </div>
+
+          @if (consultationSelectionnee.resultats.length > 0 && consultationSelectionnee.resultats[consultationSelectionnee.resultats.length - 1].niveauGravite !== 'FAIBLE') {
+            <div class="alerte-gravite">
+              <mat-icon>warning</mat-icon>
+              <p><strong>Niveau d'urgence : {{ libelleGravite(consultationSelectionnee.resultats[consultationSelectionnee.resultats.length - 1].niveauGravite) }}</strong><br>
+              Il est conseillé de consulter un médecin si les symptômes persistent ou s'aggravent.</p>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+
+</div>

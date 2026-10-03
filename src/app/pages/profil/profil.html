@@ -1,0 +1,155 @@
+<!-- profil.html -->
+<!-- Page "Mon profil" : mise en page verticale en lignes, comme la maquette -->
+<div class="page-profil">
+
+  @if (chargement) {
+    <p class="message-etat">Chargement de votre profil...</p>
+  }
+
+  @if (erreur) {
+    <div class="message-erreur-globale">
+      <mat-icon>error_outline</mat-icon>
+      Une erreur est survenue. Réessayez plus tard.
+    </div>
+  }
+
+  @if (profil) {
+    <h1 class="titre-page">Mon profil</h1>
+
+    <div class="entete-profil">
+      <div class="avatar-profil-page">
+        <mat-icon>person</mat-icon>
+      </div>
+      <div class="infos-entete">
+        <h2>{{ profil.prenom }} {{ profil.nom }}</h2>
+        <span class="email-profil">{{ profil.email }}</span>
+      </div>
+
+      @if (!modeEdition) {
+        <button class="bouton-modifier" (click)="activerEdition()">
+          Modifier
+        </button>
+      }
+    </div>
+
+    @if (messageSucces) {
+      <div class="message-succes">
+        <mat-icon>check_circle</mat-icon> Profil mis à jour avec succès.
+      </div>
+    }
+
+    <form (ngSubmit)="enregistrer()">
+
+      <!-- Informations personnelles -->
+      <div class="carte-section">
+        <h3>Informations personnelles</h3>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>person_outline</mat-icon> Nom</span>
+          @if (modeEdition) {
+            <input type="text" [(ngModel)]="formulaire.nom" name="nom">
+          } @else {
+            <span class="valeur-champ">{{ profil.nom }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>person_outline</mat-icon> Prénom</span>
+          @if (modeEdition) {
+            <input type="text" [(ngModel)]="formulaire.prenom" name="prenom">
+          } @else {
+            <span class="valeur-champ">{{ profil.prenom }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>phone</mat-icon> Téléphone</span>
+          @if (modeEdition) {
+            <input type="text" [(ngModel)]="formulaire.telephone" name="telephone">
+          } @else {
+            <span class="valeur-champ">{{ profil.telephone || 'Non renseigné' }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>calendar_today</mat-icon> Date de naissance</span>
+          @if (modeEdition) {
+            <input type="date" [(ngModel)]="formulaire.dateNaissance" name="dateNaissance">
+          } @else {
+            <span class="valeur-champ">{{ profil.dateNaissance || 'Non renseignée' }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>wc</mat-icon> Sexe</span>
+          @if (modeEdition) {
+            <select [(ngModel)]="formulaire.sexe" name="sexe">
+              <option value="">-</option>
+              <option value="M">Masculin</option>
+              <option value="F">Féminin</option>
+            </select>
+          } @else {
+            <span class="valeur-champ">{{ profil.sexe === 'M' ? 'Masculin' : profil.sexe === 'F' ? 'Féminin' : 'Non renseigné' }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Informations de sante -->
+      <div class="carte-section">
+        <h3>Informations de santé <span class="mention-optionnelle">(optionnel)</span></h3>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>bloodtype</mat-icon> Groupe sanguin</span>
+          @if (modeEdition) {
+            <select [(ngModel)]="formulaire.groupeSanguin" name="groupeSanguin">
+              <option value="">-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          } @else {
+            <span class="valeur-champ">{{ profil.groupeSanguin || 'Non renseigné' }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>medical_information</mat-icon> Antécédents médicaux</span>
+          @if (modeEdition) {
+            <textarea [(ngModel)]="formulaire.antecedents" name="antecedents" rows="2"></textarea>
+          } @else {
+            <span class="valeur-champ">{{ profil.antecedents || 'Non renseignés' }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>warning_amber</mat-icon> Allergies</span>
+          @if (modeEdition) {
+            <textarea [(ngModel)]="formulaire.allergies" name="allergies" rows="2"></textarea>
+          } @else {
+            <span class="valeur-champ">{{ profil.allergies || 'Non renseignées' }}</span>
+          }
+        </div>
+
+        <div class="ligne-champ">
+          <span class="libelle-champ"><mat-icon>location_on</mat-icon> Adresse</span>
+          <span class="valeur-champ">Dakar, Sénégal</span>
+        </div>
+      </div>
+
+      @if (modeEdition) {
+        <div class="actions-edition">
+          <button type="button" class="bouton-annuler" (click)="annulerEdition()">Annuler</button>
+          <button type="submit" class="bouton-enregistrer" [disabled]="enregistrement">
+            @if (enregistrement) { Enregistrement... } @else { Enregistrer }
+          </button>
+        </div>
+      }
+    </form>
+  }
+
+</div>

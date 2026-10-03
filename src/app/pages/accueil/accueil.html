@@ -1,0 +1,144 @@
+<!-- accueil.html -->
+<!-- Page d'accueil : banniere, fonctionnalites cles, section a propos enrichie, footer avec contact -->
+<div class="page-accueil">
+
+  <!-- Banniere -->
+  <section class="banniere">
+    <div class="contenu-banniere">
+      <span class="badge-banniere">
+        <mat-icon>favorite</mat-icon> SenMedical
+      </span>
+      <h1>Des réponses fiables<br>pour <span class="accent">vous orienter</span></h1>
+      <p>Symptômes, conseils, urgences, hôpitaux — notre IA vous guide, à tout moment.</p>
+      <button class="bouton-primaire" (click)="allerVers('/chat')">
+        <mat-icon>chat_bubble_outline</mat-icon>
+        Commencer une conversation
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <img src="/accueilimage.jpg" alt="Médecin assisté par l'IA SenMédical" class="image-banniere">
+  </section>
+
+  <!-- Fonctionnalites -->
+  <section class="grille-cartes">
+    <button class="carte-fonctionnalite" (click)="allerVers('/chat')">
+      <span class="icone-carte fond-bleu"><mat-icon>chat_bubble_outline</mat-icon></span>
+      <span class="texte-carte">
+        <span class="titre-carte">Poser une question</span>
+        <span class="description-carte">Décrivez vos symptômes ou votre besoin d'orientation.</span>
+      </span>
+      <mat-icon class="fleche-carte">arrow_forward</mat-icon>
+    </button>
+
+    <button class="carte-fonctionnalite" (click)="allerVers('/chat')">
+      <span class="icone-carte fond-vert"><mat-icon>location_on</mat-icon></span>
+      <span class="texte-carte">
+        <span class="titre-carte">Trouver un hôpital</span>
+        <span class="description-carte">Localisez l'hôpital le plus proche en cas d'urgence.</span>
+      </span>
+      <mat-icon class="fleche-carte">arrow_forward</mat-icon>
+    </button>
+
+    <button class="carte-fonctionnalite" (click)="allerVers('/conseils')">
+      <span class="icone-carte fond-violet"><mat-icon>menu_book</mat-icon></span>
+      <span class="texte-carte">
+        <span class="titre-carte">Conseils santé</span>
+        <span class="description-carte">Adoptez de bons réflexes pour votre bien-être.</span>
+      </span>
+      <mat-icon class="fleche-carte">arrow_forward</mat-icon>
+    </button>
+
+    <button class="carte-fonctionnalite" (click)="allerVers('/consultations')">
+      <span class="icone-carte fond-ambre"><mat-icon>calendar_today</mat-icon></span>
+      <span class="texte-carte">
+        <span class="titre-carte">Mes consultations</span>
+        <span class="description-carte">Retrouvez l'historique de vos échanges.</span>
+      </span>
+      <mat-icon class="fleche-carte">arrow_forward</mat-icon>
+    </button>
+  </section>
+
+  <!-- Section A propos -->
+  <section class="section-apropos">
+    <div class="entete-section">
+      <span class="etiquette">À propos</span>
+      <h2>Le Centre de Santé SenMédical</h2>
+      <p>
+        Basé à Dakar, SenMédical associe expertise clinique et intelligence artificielle
+        pour offrir à chaque patient une première orientation fiable, rapide et accessible —
+        sans jamais se substituer à un avis médical professionnel.
+      </p>
+    </div>
+
+    <div class="grille-apropos">
+      <article class="point-apropos">
+        <mat-icon>psychology</mat-icon>
+        <div>
+          <h4>Une IA au service de l'orientation</h4>
+          <p>Notre chatbot analyse les symptômes décrits par le patient et s'appuie sur une base de connaissances médicales vérifiées pour proposer une orientation adaptée vers le bon spécialiste.</p>
+        </div>
+      </article>
+
+      <article class="point-apropos">
+        <mat-icon>rule</mat-icon>
+        <div>
+          <h4>Sans diagnostic, en toute sécurité</h4>
+          <p>SenMédical ne pose jamais de diagnostic médical. La plateforme joue le rôle d'un premier filtre intelligent, avant une consultation avec un professionnel de santé.</p>
+        </div>
+      </article>
+
+      <article class="point-apropos">
+        <mat-icon>emergency</mat-icon>
+        <div>
+          <h4>Réactivité en cas d'urgence</h4>
+          <p>Lorsqu'une situation est jugée grave, la plateforme localise automatiquement l'hôpital le plus proche pour orienter rapidement le patient.</p>
+        </div>
+      </article>
+
+      <article class="point-apropos">
+        <mat-icon>groups</mat-icon>
+        <div>
+          <h4>Une mission d'accessibilité</h4>
+          <p>Réduire la surcharge des structures de santé au Sénégal en permettant à chacun d'obtenir une première orientation médicale, où qu'il soit, à toute heure.</p>
+        </div>
+      </article>
+    </div>
+
+        <div class="avertissement">
+      <mat-icon>info</mat-icon>
+      <p>MediBot IA, l'assistant virtuel de SenMédical, ne remplace pas un médecin et ne pose aucun diagnostic. Les informations fournies sont à visée d'orientation uniquement.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="pied-de-page">
+  <div class="colonne-footer colonne-marque">
+    <div class="logo-footer">
+      <img src="/LOGOsenmedical-removebg-preview.png" alt="Logo SenMedical">
+      <span>SenMedical</span>
+    </div>
+    <p>Votre santé, notre priorité. Une orientation médicale intelligente, fiable et accessible à tous.</p>
+  </div>
+
+  <div class="colonne-footer">
+    <h5>Navigation</h5>
+    <a routerLink="/accueil">Accueil</a>
+    <a routerLink="/chat">Chatbot</a>
+    <a routerLink="/conseils">Conseils santé</a>
+    <a routerLink="/consultations">Mes consultations</a>
+  </div>
+
+  <div class="colonne-footer">
+    <h5>Nous contacter</h5>
+    <p class="ligne-contact"><mat-icon>location_on</mat-icon> Centre de Santé SenMédical, Dakar, Sénégal</p>
+    <p class="ligne-contact"><mat-icon>call</mat-icon> 33 456 78 90</p>
+    <p class="ligne-contact"><mat-icon>mail</mat-icon> SenMedical&#64;gmail.com</p>
+    <p class="ligne-contact"><mat-icon>schedule</mat-icon> 7j/7 · 24h/24</p>
+  </div>
+
+  <div class="bas-de-footer">
+    <p>&copy; 2026 SenMédical Tous droits réservés.</p>
+  </div>
+</footer>

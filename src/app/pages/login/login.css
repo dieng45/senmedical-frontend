@@ -1,0 +1,281 @@
+/* login.css */
+/* Reproduction de la maquette : 3 colonnes, degrade bleu-blanc, carte centrale */
+
+.page-connexion {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f9ff;
+  overflow: hidden;
+}
+
+/* Colonnes gauche/droite */
+.colonne-illustration {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.colonne-gauche {
+  left: 0;
+  width:50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colonne-droite {
+  right: 0;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-medecin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  filter: blur(2px) brightness(0.55);
+}
+/*
+.texte-accroche {
+  position: relative;
+  z-index: 2;
+  margin-left: 28px;
+  margin-right: 16px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.35;
+  color: #e9efee;
+  text-shadow: 0 2px 12px rgba(0, 30, 80, 0.6), 0 1px 3px rgba(0,0,0,0.4);
+  letter-spacing: 0.3px;
+}
+*/
+/* Visuel IA a droite */
+.visuel-ia {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image-cerveau-ia {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to left, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+  filter: blur(2px) brightness(0.55);
+}
+
+.libelle-ia {
+  position: absolute;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1565c0;
+}
+
+.icone-flottante {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1976d2;
+}
+
+.icone-flottante.position-1 { top: 0; right: 10px; }
+.icone-flottante.position-2 { top: 60px; right: -20px; }
+.icone-flottante.position-3 { top: 130px; right: -10px; }
+.icone-flottante.position-4 { top: 190px; right: 30px; }
+
+/* Carte de connexion centrale */
+.carte-connexion {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 380px;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(13, 71, 161, 0.15);
+}
+
+.entete-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.icone-logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.image-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.texte-logo h1 {
+  font-size: 22px;
+  color: #0d47a1;
+  margin: 0;
+}
+
+.accent-vert {
+  color: #26a69a;
+}
+
+.slogan {
+  font-size: 12px;
+  color: #555;
+  margin: 2px 0 0;
+}
+
+.sous-titre {
+  font-size: 11px;
+  color: #999;
+  margin: 2px 0 0;
+}
+
+.champ-pleine-largeur {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.bouton-connexion {
+  width: 100%;
+  height: 46px;
+  margin-top: 12px;
+  border-radius: 24px !important;
+  background: linear-gradient(135deg, #1976d2, #1565c0) !important;
+}
+
+.bouton-connexion mat-icon {
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.lien-mot-de-passe-oublie {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  color: #1565c0;
+  text-decoration: none;
+}
+
+.message-erreur {
+  color: #d32f2f;
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.separateur {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 20px 0 16px;
+}
+
+.lien-inscription {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.lien-inscription a {
+  color: #26a69a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Bande de fonctionnalites en bas */
+.bande-fonctionnalites {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  z-index: 2;
+}
+
+.fonctionnalite {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 200px;
+}
+
+.fonctionnalite mat-icon {
+  background: #e3f2fd;
+  color: #1565c0;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.fonctionnalite span {
+  font-size: 12px;
+  color: #444;
+  line-height: 1.3;
+}
+
+.avertissement {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #666;
+  padding: 6px 14px;
+  border-radius: 20px;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.icone-avertissement {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive : cache les colonnes laterales sur petit ecran */
+@media (max-width: 900px) {
+  .colonne-illustration,
+  .bande-fonctionnalites {
+    display: none;
+  }
+}

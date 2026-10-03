@@ -1,0 +1,61 @@
+<!-- conseils.html -->
+<!-- Page Conseils sante : grille de categories, chaque carte ouvre une page detail dediee -->
+<div class="page-conseils">
+
+  <div class="entete-conseils">
+    <h1>Conseils santé</h1>
+    <p>Des informations simples pour de meilleurs réflexes</p>
+  </div>
+
+  <div class="grille-conseils">
+    @for (conseil of conseils; track conseil.slug) {
+      <button class="carte-conseil" (click)="ouvrirConseil(conseil.slug)">
+        <div class="image-conseil-conteneur">
+          <img [src]="conseil.image" [alt]="conseil.titre" class="image-conseil">
+          <span class="icone-flottante" [style.background]="conseil.couleurTexte">
+            <mat-icon>{{ conseil.icone }}</mat-icon>
+          </span>
+        </div>
+        <span class="titre-conseil">{{ conseil.titre }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="avertissement-conseils">
+    <mat-icon>info</mat-icon>
+    <p>Ces informations sont données à titre indicatif et ne remplacent pas l'avis d'un professionnel de santé.</p>
+  </div>
+
+  <!-- Informations hopital -->
+  <div class="section-hopital">
+    <div class="entete-hopital">
+      <span class="etiquette-hopital">Besoin d'aide ?</span>
+      <h2>Centre de Santé SenMédical</h2>
+    </div>
+
+    <div class="carte-hopital">
+      <div class="ligne-info-hopital">
+        <mat-icon>location_on</mat-icon>
+        <div>
+          <span class="libelle-info">Adresse</span>
+          <span class="valeur-info">Centre de Santé SenMédical, Dakar, Sénégal</span>
+        </div>
+      </div>
+      <div class="ligne-info-hopital">
+        <mat-icon>call</mat-icon>
+        <div>
+          <span class="libelle-info">Téléphone</span>
+          <span class="valeur-info">33 456 78 90</span>
+        </div>
+      </div>
+      <div class="ligne-info-hopital">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <span class="libelle-info">Horaires</span>
+          <span class="valeur-info">7j/7 · 24h/24</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

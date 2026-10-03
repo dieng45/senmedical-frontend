@@ -1,0 +1,267 @@
+/* conseils.css */
+/* Cartes avec vraies images de fond, section infos hopital en bas */
+
+.page-conseils {
+  --bleu-principal: #1565c0;
+  --bleu-clair: #1e88e5;
+  --encre: #101828;
+  --gris-texte: #667085;
+  --bordure: #eaecf0;
+  --rayon: 16px;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--encre);
+}
+
+.entete-conseils h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.entete-conseils p {
+  font-size: 13.5px;
+  color: var(--gris-texte);
+  margin: 0 0 24px;
+}
+
+/* Grille de categories avec images */
+.grille-conseils {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.carte-conseil {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  overflow: hidden;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.carte-conseil:hover {
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.12);
+  transform: translateY(-3px);
+}
+
+.image-conseil-conteneur {
+  position: relative;
+  width: 100%;
+  height: 130px;
+}
+
+.image-conseil {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.icone-flottante {
+  position: absolute;
+  bottom: -16px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.icone-flottante mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.titre-conseil {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--encre);
+  padding: 26px 16px 16px;
+  text-align: left;
+}
+
+/* Avertissement */
+.avertissement-conseils {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fffaf0;
+  border: 1px solid #fde3a7;
+  border-radius: 14px;
+  padding: 15px 20px;
+  margin-bottom: 32px;
+}
+
+.avertissement-conseils mat-icon {
+  color: #b45309;
+  flex-shrink: 0;
+}
+
+.avertissement-conseils p {
+  font-size: 12.5px;
+  color: #92400e;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Section hopital */
+.entete-hopital {
+  margin-bottom: 16px;
+}
+
+.etiquette-hopital {
+  display: inline-block;
+  background: #e5f0fd;
+  color: var(--bleu-principal);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.entete-hopital h2 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.carte-hopital {
+  display: flex;
+  gap: 24px;
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 22px 26px;
+  flex-wrap: wrap;
+}
+
+.ligne-info-hopital {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.ligne-info-hopital mat-icon {
+  background: #e5f0fd;
+  color: var(--bleu-principal);
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.libelle-info {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #98a2b3;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.valeur-info {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--encre);
+}
+
+/* Panneau detail */
+.fond-panneau {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.panneau-detail {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.entete-panneau {
+  position: relative;
+}
+
+.image-panneau {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.bouton-fermer {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--encre);
+}
+
+.titre-panneau {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 20px 24px 14px;
+}
+
+.liste-points {
+  margin: 0;
+  padding: 0 24px 24px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.liste-points li {
+  font-size: 13.5px;
+  color: var(--encre);
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .grille-conseils {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .carte-hopital {
+    flex-direction: column;
+  }
+}

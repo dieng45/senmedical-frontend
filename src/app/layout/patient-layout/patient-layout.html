@@ -1,0 +1,81 @@
+<!-- patient-layout.html -->
+<!-- Structure commune : barre laterale a gauche + en-tete (recherche/notif/profil) + contenu a droite -->
+<div class="conteneur-layout">
+
+  <!-- Barre laterale -->
+  <aside class="barre-laterale">
+    <div class="logo-barre">
+      <img src="/LOGOsenmedical-removebg-preview.png" alt="Logo" class="image-logo-barre">
+      <div class="texte-logo-barre">
+        <span class="nom-app">SenMedical</span>
+        <span class="slogan-barre">Votre santé, notre priorité</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <a routerLink="/accueil" routerLinkActive="lien-actif" class="lien-nav">
+        <mat-icon>home</mat-icon> Accueil
+      </a>
+      <a routerLink="/chat" routerLinkActive="lien-actif" class="lien-nav">
+        <mat-icon>chat_bubble_outline</mat-icon> Chatbot
+      </a>
+      <a routerLink="/conseils" routerLinkActive="lien-actif" class="lien-nav">
+        <mat-icon>favorite_border</mat-icon> Conseils santé
+      </a>
+      <a routerLink="/consultations" routerLinkActive="lien-actif" class="lien-nav">
+        <mat-icon>calendar_today</mat-icon> Mes consultations
+      </a>
+      <a routerLink="/profil" routerLinkActive="lien-actif" class="lien-nav">
+        <mat-icon>person_outline</mat-icon> Mon profil
+      </a>
+    </nav>
+
+    <div class="pied-barre">
+      <p>Ensemble pour<br>une meilleure santé</p>
+    </div>
+  </aside>
+
+  <!-- Zone principale : en-tete + contenu -->
+  <div class="zone-principale">
+    <header class="en-tete">
+      @if (afficherRecherche) {
+        <div class="barre-recherche">
+          <mat-icon>search</mat-icon>
+          <input type="text" placeholder="Rechercher un symptôme, une maladie, un conseil...">
+        </div>
+      } @else {
+        <div></div>
+      }
+
+      <div class="actions-en-tete">
+        <button class="bouton-notification" [matMenuTriggerFor]="menuNotifications">
+          <mat-icon>notifications_none</mat-icon>
+          <span class="pastille-notification"></span>
+        </button>
+        <mat-menu #menuNotifications="matMenu">
+          <div class="menu-vide">Aucune nouvelle notification</div>
+        </mat-menu>
+
+        <button class="bouton-profil" [matMenuTriggerFor]="menuProfil">
+          <div class="avatar-profil">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="nom-utilisateur">{{ nomAffiche }}</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+        <mat-menu #menuProfil="matMenu">
+          <a mat-menu-item routerLink="/profil">
+            <mat-icon>person_outline</mat-icon> Mon profil
+          </a>
+          <button mat-menu-item (click)="seDeconnecter()">
+            <mat-icon>logout</mat-icon> Déconnexion
+          </button>
+        </mat-menu>
+      </div>
+    </header>
+
+    <main class="contenu-page">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

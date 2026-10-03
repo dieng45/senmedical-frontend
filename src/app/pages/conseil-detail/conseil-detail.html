@@ -1,0 +1,43 @@
+<!-- conseil-detail.html -->
+<!-- Page detail plein format d'un conseil sante, avec grande image et liste de recommandations -->
+@if (conseil) {
+  <div class="page-detail-conseil">
+
+    <a routerLink="/conseils" class="lien-retour">
+      <mat-icon>arrow_back</mat-icon> Retour aux conseils
+    </a>
+
+    <div class="banniere-detail">
+      <img [src]="conseil.image" [alt]="conseil.titre" class="image-banniere-detail">
+      <div class="voile-banniere"></div>
+      <div class="contenu-banniere-detail">
+        <span class="icone-detail" [style.background]="conseil.couleurTexte">
+          <mat-icon>{{ conseil.icone }}</mat-icon>
+        </span>
+        <h1>{{ conseil.titre }}</h1>
+        <p>{{ conseil.resume }}</p>
+      </div>
+    </div>
+
+    <div class="corps-detail">
+      <h2>Recommandations</h2>
+      <ul class="liste-recommandations">
+        @for (point of conseil.contenu; track point) {
+          <li>
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ point }}</span>
+          </li>
+        }
+      </ul>
+
+      <div class="avertissement-detail">
+        <mat-icon>info</mat-icon>
+        <p>Ces informations sont données à titre indicatif et ne remplacent pas l'avis d'un professionnel de santé. En cas de doute, consultez MediBot IA ou un médecin.</p>
+      </div>
+
+      <a routerLink="/chat" class="bouton-parler-medibot">
+        <mat-icon>chat_bubble_outline</mat-icon> Décrire mes symptômes à MediBot IA
+      </a>
+    </div>
+  </div>
+}

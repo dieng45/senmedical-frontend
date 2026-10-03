@@ -1,0 +1,371 @@
+/* utilisateurs-admin.css */
+/* Tableau listant les patients + modals edition/suppression + recherche */
+
+.page-utilisateurs-admin {
+  --bleu-principal: #1565c0;
+  --encre: #101828;
+  --gris-texte: #667085;
+  --bordure: #eaecf0;
+
+  font-family: 'Roboto', sans-serif;
+  color: var(--encre);
+}
+
+.entete-admin {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.entete-admin h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.entete-admin p {
+  font-size: 13px;
+  color: var(--gris-texte);
+  margin: 0;
+}
+
+.zone-recherche {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: 100px;
+  padding: 8px 16px;
+  min-width: 260px;
+  flex-shrink: 0;
+}
+
+.zone-recherche mat-icon {
+  color: var(--gris-texte);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.zone-recherche input {
+  border: none;
+  outline: none;
+  font-size: 13.5px;
+  font-family: inherit;
+  flex: 1;
+}
+
+.message-etat {
+  color: var(--gris-texte);
+  font-size: 13.5px;
+}
+
+.tableau-utilisateurs {
+  background: white;
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ligne-entete,
+.ligne-utilisateur {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.2fr 1fr 0.9fr 120px;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.ligne-entete {
+  background: #f8fafc;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--gris-texte);
+}
+
+.colonne-actions-entete {
+  text-align: right;
+}
+
+.ligne-utilisateur {
+  border-top: 1px solid var(--bordure);
+  font-size: 13px;
+}
+
+.cellule-nom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.avatar-utilisateur {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #dceafc;
+  color: var(--bleu-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.cellule-email,
+.cellule-telephone,
+.cellule-date {
+  color: var(--gris-texte);
+}
+
+.badge-statut {
+  display: inline-block;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.badge-inactif {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.cellule-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.bouton-icone {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  color: #cbd5e1;
+}
+
+.bouton-icone:hover {
+  background: #f1f5f9;
+  color: var(--bleu-principal);
+}
+
+.bouton-supprimer:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.etat-vide-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: var(--gris-texte);
+  text-align: center;
+}
+
+.etat-vide-admin mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: #cbd5e1;
+}
+
+/* Modals */
+.fond-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal-edition {
+  background: white;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 480px;
+  padding: 26px 28px;
+}
+
+.entete-modal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.entete-modal h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.sous-titre-modal {
+  font-size: 12px;
+  color: var(--gris-texte);
+  margin: 4px 0 0;
+}
+
+.bouton-fermer-modal {
+  background: #f2f4f7;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gris-texte);
+  flex-shrink: 0;
+}
+
+.champ-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.champ-modal label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gris-texte);
+}
+
+.champ-modal input {
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+}
+
+.champ-modal input:focus {
+  border-color: var(--bleu-principal);
+}
+
+.ligne-champs-modal {
+  display: flex;
+  gap: 12px;
+}
+
+.ligne-champs-modal .champ-modal {
+  flex: 1;
+}
+
+.message-erreur-modal {
+  color: #dc2626;
+  font-size: 12.5px;
+  margin: 0 0 16px;
+}
+
+.actions-modal {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.bouton-annuler-modal {
+  background: white;
+  border: 1px solid var(--bordure);
+  color: var(--gris-texte);
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.bouton-enregistrer-modal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bleu-principal);
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.bouton-enregistrer-modal:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.bouton-enregistrer-modal mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Confirmation suppression */
+.modal-confirmation {
+  background: white;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 28px;
+  text-align: center;
+}
+
+.icone-avertissement {
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 50%;
+  padding: 12px;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 12px;
+}
+
+.modal-confirmation h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.modal-confirmation p {
+  font-size: 13px;
+  color: var(--gris-texte);
+  margin: 0 0 20px;
+}
+
+.modal-confirmation .actions-modal {
+  justify-content: center;
+}
+
+.bouton-confirmer-suppression {
+  background: #dc2626;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}

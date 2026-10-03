@@ -1,0 +1,195 @@
+<!-- chat.html -->
+<!-- Interface de conversation : bulles avec avatars pour bot et patient, comme la maquette -->
+<div class="page-chat">
+
+  <div class="entete-chat">
+    <div class="avatar-bot">
+      <img src="/medibot-avatar.png" alt="MediBot IA" class="image-avatar-bot">
+    </div>
+    <div>
+      <h2>MediBot IA</h2>
+      <span class="statut-en-ligne">
+        <span class="pastille-en-ligne"></span> En ligne · Assistant d'orientation médicale
+      </span>
+    </div>
+  </div>
+
+  <div class="corps-chat">
+
+    <div class="colonne-conversation">
+
+      @if (erreurDemarrage) {
+        <div class="message-erreur-globale">
+          <mat-icon>error_outline</mat-icon>
+          Impossible de démarrer la consultation. Vérifiez votre connexion et réessayez.
+        </div>
+      }
+
+      <div class="zone-messages" #zoneMessages>
+        @for (message of messages; track $index) {
+          <div class="ligne-message" [class.ligne-patient]="message.expediteur === 'patient'">
+
+            @if (message.expediteur === 'bot') {
+              <div class="avatar-mini-bot">
+                <img src="/medibot-avatar.png" alt="MediBot IA" class="image-avatar-bot">
+              </div>
+            }
+
+            <div class="groupe-bulle">
+              <div class="bulle-message" [class.bulle-patient]="message.expediteur === 'patient'">
+                <p>{{ message.contenu }}</p>
+
+                @if (message.gravite) {
+                  <div class="badges-reponse">
+                    <span class="badge-specialite">{{ message.specialite }}</span>
+                    <span class="badge-gravite" [class]="classeGravite(message.gravite)">
+                      Gravité : {{ message.gravite }}
+                    </span>
+                  </div>
+                }
+              </div>
+              <span class="horodatage" [class.horodatage-patient]="message.expediteur === 'patient'">{{ message.heure }}</span>
+            </div>
+
+            @if (message.expediteur === 'patient') {
+              <div class="avatar-mini-patient">
+                <mat-icon>person</mat-icon>
+              </div>
+            }
+          </div>
+        }
+
+        @if (chargement) {
+          <div class="ligne-message">
+            <div class="avatar-mini-bot">
+              <img src="/medibot-avatar.png" alt="MediBot IA" class="image-avatar-bot">
+            </div>
+            <div class="groupe-bulle">
+              <div class="bulle-message bulle-chargement">
+                <span class="point"></span>
+                <span class="point"></span>
+                <span class="point"></span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Carte hopital le plus proche, affichee automatiquement en cas d'urgence -->
+      @if (rechercheHopitalEnCours) {
+        <div class="carte-recherche-hopital">
+          <mat-icon>my_location</mat-icon>
+          Recherche de l'hôpital le plus proche de vous...
+        </div>
+      }
+
+      @if (erreurLocalisation) {
+        <div class="carte-erreur-hopital">
+          <mat-icon>error_outline</mat-icon>
+          {{ erreurLocalisation }}
+        </div>
+      }
+
+      @if (hopitalTrouve) {
+        <div class="carte-hopital-trouve">
+          <div class="entete-carte-hopital">
+            <mat-icon>local_hospital</mat-icon>
+            <span>Hôpital le plus proche</span>
+          </div>
+          <strong>{{ hopitalTrouve.nom }}</strong>
+          <span class="distance-hopital">{{ hopitalTrouve.distanceKm.toFixed(1) }} km de votre position</span>
+          @if (hopitalTrouve.telephone) {
+            <a [href]="'tel:' + hopitalTrouve.telephone" class="telephone-hopital">
+              <mat-icon>call</mat-icon> {{ hopitalTrouve.telephone }}
+            </a>
+          }
+          <a [href]="lienItineraire(hopitalTrouve)" target="_blank" class="bouton-itineraire">
+            <mat-icon>directions</mat-icon> Itinéraire
+          </a>
+        </div>
+      }
+
+      <!-- Zone de saisie -->
+      <div class="zone-saisie">
+        <button class="bouton-piece-jointe" type="button">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input
+          type="text"
+          placeholder="Écrivez votre message..."
+          [(ngModel)]="messageEnCours"
+          (keyup.enter)="envoyerMessage()"
+          [disabled]="chargement || !consultationId">
+        <button
+          class="bouton-envoyer"
+          (click)="envoyerMessage()"
+          [disabled]="chargement || !consultationId || !messageEnCours.trim()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+
+      <p class="avertissement-chat">
+        <mat-icon>info</mat-icon>
+        Les réponses sont fournies à titre d'orientation et ne remplacent pas une consultation médicale.
+      </p>
+    </div>
+
+    <!-- Colonne laterale droite -->
+    <aside class="colonne-laterale">
+
+      <div class="carte-bot-info">
+        <div class="avatar-bot-large">
+          <img src="/medibot-avatar.png" alt="MediBot IA" class="image-avatar-bot">
+        </div>
+        <h3>MediBot IA</h3>
+        <span class="sous-titre-bot">Assistant d'orientation médicale</span>
+        <span class="statut-en-ligne petit">
+          <span class="pastille-en-ligne"></span> En ligne
+        </span>
+        <p class="texte-bot-info">Je suis là pour vous écouter et vous orienter vers la bonne structure de santé.</p>
+      </div>
+
+      <div class="bloc-actions-rapides">
+        <span class="titre-colonne">Actions rapides</span>
+
+        <a routerLink="/chat" class="action-rapide">
+          <span class="icone-action fond-bleu"><mat-icon>location_on</mat-icon></span>
+          <span>
+            <strong>Trouver un hôpital proche</strong>
+            <small>Découvrez les établissements de santé près de chez vous</small>
+          </span>
+          <mat-icon class="fleche-action">chevron_right</mat-icon>
+        </a>
+
+        <a routerLink="/conseils" class="action-rapide">
+          <span class="icone-action fond-violet"><mat-icon>menu_book</mat-icon></span>
+          <span>
+            <strong>Voir mes conseils santé</strong>
+            <small>Astuces et informations utiles</small>
+          </span>
+          <mat-icon class="fleche-action">chevron_right</mat-icon>
+        </a>
+
+        <a routerLink="/consultations" class="action-rapide">
+          <span class="icone-action fond-ambre"><mat-icon>history</mat-icon></span>
+          <span>
+            <strong>Consulter mon historique</strong>
+            <small>Vos précédentes conversations</small>
+          </span>
+          <mat-icon class="fleche-action">chevron_right</mat-icon>
+        </a>
+      </div>
+
+      <div class="carte-urgence">
+        <mat-icon>near_me</mat-icon>
+        <p>En cas d'urgence, je peux vous aider à trouver l'hôpital le plus proche via Google Maps.</p>
+      </div>
+
+      <div class="carte-sante">
+        <mat-icon>favorite</mat-icon>
+        <p><strong>Votre santé est importante</strong><br>Faites confiance à MediBot IA pour une meilleure orientation.</p>
+      </div>
+
+    </aside>
+  </div>
+</div>

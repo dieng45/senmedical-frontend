@@ -1,0 +1,76 @@
+<!-- login.html -->
+<!-- Page de connexion en 3 colonnes : photo medecin a gauche, formulaire au centre, IA a droite -->
+<div class="page-connexion">
+
+  <!-- Colonne gauche : photo + accroche -->
+  <div class="colonne-illustration colonne-gauche">
+    <img src="medecin.jpg" alt="Medecin utilisant une tablette" class="photo-medecin">
+    <p class="texte-accroche">Une meilleure<br>orientation pour<br>votre santé</p>
+  </div>
+
+  <!-- Colonne centrale : carte de connexion -->
+  <mat-card class="carte-connexion">
+    <div class="entete-logo">
+      <div class="icone-logo">
+        <img src="LOGOsenmedical-removebg-preview.png" alt="Logo SenMedical" class="image-logo">
+      </div>
+      <div class="texte-logo">
+        <h1>Sen<span class="accent-vert">Medical</span></h1>
+        <p class="slogan">Votre santé, notre priorité</p>
+        <p class="sous-titre">Chatbot médical d'orientation basé sur l'IA</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="seConnecter()" #formConnexion="ngForm">
+      <mat-form-field appearance="outline" class="champ-pleine-largeur">
+        <mat-icon matPrefix>mail</mat-icon>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="champ-pleine-largeur">
+        <mat-icon matPrefix>lock</mat-icon>
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [type]="motDePasseVisible ? 'text' : 'password'"
+               name="motDePasse" [(ngModel)]="motDePasse" required>
+        <button mat-icon-button matSuffix type="button" (click)="basculerVisibiliteMotDePasse()">
+          <mat-icon>{{ motDePasseVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      @if (messageErreur) {
+        <p class="message-erreur">{{ messageErreur }}</p>
+      }
+
+      <button mat-flat-button color="primary" type="submit"
+              class="bouton-connexion"
+              [disabled]="!formConnexion.valid || chargement">
+        @if (chargement) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <span>Se connecter</span> <mat-icon>arrow_forward</mat-icon>
+        }
+      </button>
+
+      <a class="lien-mot-de-passe-oublie" href="#">Mot de passe oublié ?</a>
+    </form>
+
+    <hr class="separateur">
+
+    <p class="lien-inscription">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </p>
+  </mat-card>
+
+  <!-- Colonne droite : illustration IA -->
+  <div class="colonne-illustration colonne-droite">
+    <div class="visuel-ia">
+      <img src="fond-medical.jpg" alt="Illustration IA medicale" class="image-cerveau-ia">
+    </div>
+  </div>
+
+  <p class="avertissement">
+    <mat-icon class="icone-avertissement">info</mat-icon>
+    Cette application ne remplace pas un médecin et ne pose pas de diagnostic.
+  </p>
+</div>
